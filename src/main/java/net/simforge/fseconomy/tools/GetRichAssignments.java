@@ -1,4 +1,4 @@
-package net.simforge.fse;
+package net.simforge.fseconomy.tools;
 
 import net.simforge.commons.io.Csv;
 import net.simforge.commons.io.IOHelper;
@@ -13,15 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Deprecated
 public class GetRichAssignments {
     public static void main(String[] args) throws IOException {
-        String centerIcao = "WSSS";
-        double centerRadius = 200;
+        String centerIcao = "EGCC";
+        double centerRadius = 300;
 //        String centerIcao = "CYFB";
 //        double centerRadius = 500;
 
-        Csv airportsCsv = Csv.load(new File("./fseconomy/data/icaodata.csv"));
+        Csv airportsCsv = Csv.load(new File("./data/icaodata.csv"));
         Map<String, Geo.Coords> airports = new HashMap<String, Geo.Coords>();
         for (int i = 0; i < airportsCsv.rowCount(); i++) {
             String icao = airportsCsv.value(i, 0);
@@ -58,8 +57,10 @@ public class GetRichAssignments {
             System.out.println("URL " + url);
             String content = IOHelper.download(url);
             downloadedData.add(content);
-            System.out.println("Remained " + icaoInRadius.size() + " ICAO(s)");
-            Misc.sleep(15000);
+            if (!icaoInRadius.isEmpty()) {
+                System.out.println("Remained " + icaoInRadius.size() + " ICAO(s)");
+                Misc.sleep(15000);
+            }
         }
 
         System.out.println("Downloaded parts: " + downloadedData.size());
@@ -73,6 +74,7 @@ public class GetRichAssignments {
 
                 String location = csv.value(i, 1);
                 String toIcao = csv.value(i, 2);
+                String commodity = csv.value(i, 6);
                 String payStr = csv.value(i, 7);
                 int pay = (int) Double.parseDouble(payStr);
 
@@ -80,13 +82,15 @@ public class GetRichAssignments {
                 Geo.Coords toIcaoCoords = airports.get(toIcao);
                 int dist = -1;
                 int payPerDist = -1;
+                int bearing = -1;
                 if (locationCoords != null && toIcaoCoords != null) {
                     dist = (int) Geo.distance(locationCoords, toIcaoCoords);
                     payPerDist = pay / dist;
+                    bearing = (int) Geo.bearing(locationCoords, toIcaoCoords);
                 }
 
-                if (pay > 10000) {
-                    System.out.println(Str.ar(String.valueOf(pay), 10) + "\t" + Str.al(location, 4) + "\t" + Str.al(toIcao, 4) + "\t" + Str.ar(String.valueOf(dist), 6) + "\t" + Str.ar(String.valueOf(payPerDist), 6));
+                if (pay > 20000) {
+                    System.out.println(Str.ar(String.valueOf(pay), 10) + "\t" + Str.al(location, 4) + "\t" + Str.al(toIcao, 4) + "\t" + Str.z(bearing, 3) + "\t" + Str.ar(String.valueOf(dist), 6) + "\t" + Str.ar(String.valueOf(pay), 6) + "\t" + Str.ar(String.valueOf(payPerDist), 6) + "\t" + commodity);
                 }
             }
         }
