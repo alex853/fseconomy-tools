@@ -15,10 +15,8 @@ import java.util.Map;
 
 public class GetRichAssignments {
     public static void main(String[] args) throws IOException {
-        String centerIcao = "EGCC";
-        double centerRadius = 300;
-//        String centerIcao = "CYFB";
-//        double centerRadius = 500;
+        String centerIcao = "LFKJ";
+        double centerRadius = 500;
 
         Csv airportsCsv = Csv.load(new File("./data/icaodata.csv"));
         Map<String, Geo.Coords> airports = new HashMap<String, Geo.Coords>();
@@ -77,6 +75,13 @@ public class GetRichAssignments {
                 String commodity = csv.value(i, 6);
                 String payStr = csv.value(i, 7);
                 int pay = (int) Double.parseDouble(payStr);
+                String amount = csv.value(i, 4);
+                String type = csv.value(i, 5);
+                int mass = type.equals("kg")
+                        ? Integer.parseInt(amount)
+                        : type.equals("passengers")
+                            ? 77*Integer.parseInt(amount)
+                            : null;
 
                 Geo.Coords locationCoords = airports.get(location);
                 Geo.Coords toIcaoCoords = airports.get(toIcao);
@@ -85,11 +90,11 @@ public class GetRichAssignments {
                 int bearing = -1;
                 if (locationCoords != null && toIcaoCoords != null) {
                     dist = (int) Geo.distance(locationCoords, toIcaoCoords);
-                    payPerDist = pay / dist;
+                    payPerDist = pay / (dist != 0 ? dist : 1);
                     bearing = (int) Geo.bearing(locationCoords, toIcaoCoords);
                 }
 
-                if (pay > 20000) {
+                if (pay > 20000 && mass < 3000) {
                     System.out.println(Str.ar(String.valueOf(pay), 10) + "\t" + Str.al(location, 4) + "\t" + Str.al(toIcao, 4) + "\t" + Str.z(bearing, 3) + "\t" + Str.ar(String.valueOf(dist), 6) + "\t" + Str.ar(String.valueOf(pay), 6) + "\t" + Str.ar(String.valueOf(payPerDist), 6) + "\t" + commodity);
                 }
             }
