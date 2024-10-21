@@ -36,7 +36,6 @@ dependencies {
     implementation 'net.simforge:refdata-airports:latest.release'
     implementation 'net.simforge:network-view-core:latest.release'
 
-//    implementation 'postgresql:postgresql:9.1-901-1.jdbc4'
     implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
 
     testImplementation 'junit:junit:4.11'
