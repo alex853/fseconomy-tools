@@ -23,7 +23,7 @@ public class TrelloSender {
                     Settings.get("trello.apiKey"),
                     Settings.get("trello.token"),
                     URLEncoder.encode(name),
-                    URLEncoder.encode(description));
+                    URLEncoder.encode(description != null ? description : ""));
 
             final HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
             con.setRequestMethod("POST");
