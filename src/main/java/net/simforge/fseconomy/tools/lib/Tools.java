@@ -1,11 +1,13 @@
 package net.simforge.fseconomy.tools.lib;
 
 import net.simforge.commons.io.Csv;
+import net.simforge.commons.io.IOHelper;
 import net.simforge.commons.misc.Geo;
 import net.simforge.commons.misc.Str;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
@@ -23,7 +25,9 @@ public class Tools {
     static {
         Csv airportsCsv;
         try {
-            airportsCsv = Csv.load(new File("./data/icaodata.csv"));
+            final InputStream is = Tools.class.getResourceAsStream("/icaodata.csv");
+            final String csv = IOHelper.readInputStream(is);
+            airportsCsv = Csv.fromContent(csv);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
