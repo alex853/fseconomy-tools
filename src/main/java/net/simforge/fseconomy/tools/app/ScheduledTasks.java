@@ -12,8 +12,9 @@ import java.util.Collection;
 public class ScheduledTasks {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    private Collection<Task> tasks = Arrays.asList(new Task[] {
-        new TransatlanticVIPAssignments()
+    private final Collection<Task> tasks = Arrays.asList(new Task[] {
+            new TransatlanticVIPAssignments(),
+            new CheapestAircraftForSale("Cessna 404 Titan", "Cessna Citation Longitude", "Cessna Citation X")
     });
 
     @Scheduled(fixedRate = 60000)

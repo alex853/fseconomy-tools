@@ -18,7 +18,7 @@ public class TrelloSender {
 
     public static void send(final String name, final String description) {
         try {
-            final String url = String.format("https://api.trello.com/1/cards?idList=%s&key=%s&token=%s&name=%s&desc=%s",
+            final String url = String.format("https://api.trello.com/1/cards?idList=%s&key=%s&token=%s&name=%s&desc=%s&pos=top",
                     Settings.get("trello.idList"),
                     Settings.get("trello.apiKey"),
                     Settings.get("trello.token"),

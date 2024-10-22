@@ -26,7 +26,7 @@ public class TransatlanticVIPAssignments implements Task {
 
     @Override
     public void process() {
-        if (!timeComes(lastCheck)) {
+        if (!Utils.timeComes(lastCheck)) {
             return;
         }
 
@@ -66,9 +66,5 @@ public class TransatlanticVIPAssignments implements Task {
         }
 
         return Geo.distance(fromIcao.get().getCoords(), toIcao.get().getCoords());
-    }
-
-    private boolean timeComes(long time) {
-        return System.currentTimeMillis() - time >= Tools.ONE_HOUR;
     }
 }
