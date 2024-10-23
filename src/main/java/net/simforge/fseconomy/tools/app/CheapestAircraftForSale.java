@@ -60,7 +60,7 @@ public class CheapestAircraftForSale implements Task {
             description.append(info).append('\n');
         }
 
-        final String name = "[" + makeModel + "] " + (cheapest != null ? formatSalePrice(cheapest) : "nothing") + " - " + LocalDate.now();
+        final String name = "[" + makeModel + "] " + (cheapest != null ? formatSalePrice(cheapest) : "nothing");
 
         final String msg = description.toString();
         final String lastMsg = notifiedMakeModels.get(makeModel);
