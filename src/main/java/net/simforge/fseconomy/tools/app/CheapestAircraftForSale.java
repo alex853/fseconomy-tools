@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,23 +43,36 @@ public class CheapestAircraftForSale implements Task {
     private void processMakeModel(final String makeModel,
                                   final List<FSEAircraft> aircrafts) {
         log.info("processing aircraft for sale - {}", makeModel);
-        final List<FSEAircraft> filtered = aircrafts.stream().filter(a -> makeModel.equals(a.getMakeModel())).collect(Collectors.toList());
-        final StringBuilder sb = new StringBuilder();
-        filtered.sort((a1, a2) -> Float.compare(a1.getSalePrice(), a2.getSalePrice()));
+        final List<FSEAircraft> filtered = aircrafts.stream()
+                .filter(a -> makeModel.equals(a.getMakeModel()))
+                .sorted((a1, a2) -> Float.compare(a1.getSalePrice(), a2.getSalePrice()))
+                .collect(Collectors.toList());
+
+        final StringBuilder description = new StringBuilder();
+        FSEAircraft cheapest = null;
         for (int i = 0; i < Math.min(3, filtered.size()); i++) {
             final FSEAircraft aircraft = filtered.get(i);
-            final String info = aircraft.getSalePrice() + " (" + aircraft.getRegistration() + ")             ";
-            log.info("top {} - {}", (i+1), info);
-            sb.append(info);
+            if (cheapest == null) {
+                cheapest = aircraft;
+            }
+            final String info = (i+1) + ") " + formatSalePrice(aircraft) + " - " + aircraft.getRegistration() + " at " + aircraft.getLocation();
+            log.info(info);
+            description.append(info).append('\n');
         }
 
-        final String msg = sb.toString();
+        final String name = "[" + makeModel + "] " + (cheapest != null ? formatSalePrice(cheapest) : "nothing") + " - " + LocalDate.now();
+
+        final String msg = description.toString();
         final String lastMsg = notifiedMakeModels.get(makeModel);
         if (Objects.equals(msg, lastMsg)) {
             return;
         }
 
-        TrelloSender.addToQueue("[" + makeModel + "]             " + msg, null);
+        TrelloSender.addToQueue(name, description.toString());
         notifiedMakeModels.put(makeModel, msg);
+    }
+
+    private String formatSalePrice(FSEAircraft aircraft) {
+        return (int) (aircraft.getSalePrice() / 1000) + "k";
     }
 }
