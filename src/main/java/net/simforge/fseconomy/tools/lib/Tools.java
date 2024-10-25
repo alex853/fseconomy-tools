@@ -45,7 +45,6 @@ public class Tools {
                     majorAirports.add(_icao);
                 }
             }
-
         }
     }
 

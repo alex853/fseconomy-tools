@@ -1,5 +1,11 @@
 package net.simforge.fseconomy.tools.lib;
 
+import net.simforge.commons.misc.Geo;
+import net.simforge.refdata.airports.Airport;
+import net.simforge.refdata.airports.Airports;
+
+import java.util.Optional;
+
 public class FSEAssignment {
     private final String id;
     private final String location;
@@ -103,7 +109,20 @@ public class FSEAssignment {
                 ? amount
                 : (type.equals("passengers") ? 77 * amount : 0);
     }
+
     public String getAircraftId() {
         return aircraftId;
+    }
+
+    public double getDistance() {
+        final Airports airports = Airports.get();
+        final Optional<Airport> fromIcao = airports.findByIcao(getLocation());
+        final Optional<Airport> toIcao = airports.findByIcao(getToIcao());
+
+        if (!fromIcao.isPresent() || !toIcao.isPresent()) {
+            return 0;
+        }
+
+        return Geo.distance(fromIcao.get().getCoords(), toIcao.get().getCoords());
     }
 }
