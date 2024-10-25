@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TransatlanticVIPAssignments implements Task {
     private static final Logger log = LoggerFactory.getLogger(TransatlanticVIPAssignments.class);
 
-    private static final Collection<String> icaos = Arrays.asList("EGLL", "KJFK", "KLGA", "KEWR");
+    private static final Collection<String> icaos = Arrays.asList("EGLL", "LPPT", "KJFK", "KLGA", "KEWR");
 
     private long lastCheck;
     private final Set<String> notifiedAssignments = new TreeSet<>();
