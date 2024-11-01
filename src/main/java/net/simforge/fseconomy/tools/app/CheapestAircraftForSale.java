@@ -55,6 +55,15 @@ public class CheapestAircraftForSale implements Task {
                 })
                 .collect(Collectors.toList());
 
+        float salePriceSum = 0;
+        int salePriceCount = 0;
+        for (int i = 1; i < Math.min(3, filtered.size()); i++) {
+            final FSEAircraft aircraft = filtered.get(i);
+            salePriceSum += aircraft.getSalePrice();
+            salePriceCount++;
+        }
+        final Float avgSalePrice = salePriceCount != 0 ? salePriceSum / salePriceCount : null;
+
         final StringBuilder description = new StringBuilder();
         FSEAircraft cheapest = null;
         for (int i = 0; i < Math.min(3, filtered.size()); i++) {
@@ -62,12 +71,17 @@ public class CheapestAircraftForSale implements Task {
             if (cheapest == null) {
                 cheapest = aircraft;
             }
-            final String info = (i+1) + ") " + formatSalePrice(aircraft) + " - " + aircraft.getRegistration() + " at " + aircraft.getLocation();
+            final String info = (i+1) + ") " + Tools.formatPrice(aircraft.getSalePrice()) + " - " + aircraft.getRegistration() + " at " + aircraft.getLocation();
             log.info(info);
             description.append(info).append('\n');
         }
 
-        final String name = "[" + makeModel + "] " + (cheapest != null ? formatSalePrice(cheapest) : "nothing");
+        final String percentDiscount = cheapest != null && avgSalePrice != null
+                ? "-" + (int)((1 - cheapest.getSalePrice()/avgSalePrice)*100) + "%"
+                : "(no discount info)";
+        final String name = "[" + makeModel + "] " + (cheapest != null
+                ? Tools.formatPrice(cheapest.getSalePrice()) + " " + percentDiscount
+                : "nothing");
 
         final String msg = description.toString();
         final String lastMsg = notifiedMakeModels.get(makeModel);
@@ -79,7 +93,4 @@ public class CheapestAircraftForSale implements Task {
         notifiedMakeModels.put(makeModel, msg);
     }
 
-    private String formatSalePrice(FSEAircraft aircraft) {
-        return Tools.formatPrice(aircraft.getSalePrice());
-    }
 }
