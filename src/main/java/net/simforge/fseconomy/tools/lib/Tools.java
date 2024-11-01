@@ -90,4 +90,10 @@ public class Tools {
                 + Str.ar(String.valueOf(assignment.getAmount()), 6) + "\t"
                 + assignment.getCommodity();
     }
+
+    private static final DecimalFormat df = new DecimalFormat("0.0");
+    public static String formatPrice(final float price) {
+        return df.format(price / 1000) + "k";
+    }
+
 }

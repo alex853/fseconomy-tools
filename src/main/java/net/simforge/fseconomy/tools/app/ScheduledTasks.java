@@ -12,10 +12,16 @@ import java.util.Collection;
 public class ScheduledTasks {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    private final Collection<Task> tasks = Arrays.asList(new Task[] {
+    private final Collection<Task> tasks = Arrays.asList(
             new TransatlanticVIPAssignments(),
-            new CheapestAircraftForSale("Cessna 404 Titan", "Cessna Citation Longitude", "Cessna Citation X")
-    });
+            new CheapestAircraftForSale(
+                    "Cessna 404 Titan",
+                    "Cessna Citation CJ4 (MSFS)",
+                    "Cessna Citation Longitude",
+                    "Cessna Citation X"),
+            new VIPAssignmentsByMakeModel("Cessna Citation CJ4 (MSFS)", 10, "C25C"),
+            new VIPAssignmentsByMakeModel("Cessna Citation Longitude", 8, "C700")
+    );
 
     @Scheduled(fixedRate = 60000)
     public void processTasks() {

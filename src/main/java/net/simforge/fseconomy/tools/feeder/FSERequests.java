@@ -4,6 +4,7 @@ import net.simforge.commons.io.Csv;
 import net.simforge.fseconomy.tools.lib.FSEAircraft;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,18 @@ public class FSERequests {
 
     public static List<FSEAircraft> loadAircraftForSale() throws IOException {
         final Csv data = FSEFeeder.loadCsv("query=aircraft&search=forsale");
+        final List<FSEAircraft> result = new ArrayList<>();
+        for (int row = 0; row < data.rowCount(); row++) {
+            if (data.rowWidth(row) != 25) {
+                continue;
+            }
+            result.add(FSEAircraft.read(data, row));
+        }
+        return result;
+    }
+
+    public static List<FSEAircraft> loadAircraftByMakeModel(final String makeModel) throws IOException {
+        final Csv data = FSEFeeder.loadCsv("query=aircraft&search=makemodel&makemodel=" + URLEncoder.encode(makeModel));
         final List<FSEAircraft> result = new ArrayList<>();
         for (int row = 0; row < data.rowCount(); row++) {
             if (data.rowWidth(row) != 25) {

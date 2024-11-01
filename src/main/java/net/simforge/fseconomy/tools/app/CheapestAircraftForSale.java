@@ -2,11 +2,11 @@ package net.simforge.fseconomy.tools.app;
 
 import net.simforge.fseconomy.tools.feeder.FSERequests;
 import net.simforge.fseconomy.tools.lib.FSEAircraft;
+import net.simforge.fseconomy.tools.lib.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +45,14 @@ public class CheapestAircraftForSale implements Task {
         log.info("processing aircraft for sale - {}", makeModel);
         final List<FSEAircraft> filtered = aircrafts.stream()
                 .filter(a -> makeModel.equals(a.getMakeModel()))
-                .sorted((a1, a2) -> Float.compare(a1.getSalePrice(), a2.getSalePrice()))
+                .sorted((a1, a2) -> {
+                    final int saleComparison = Float.compare(a1.getSalePrice(), a2.getSalePrice());
+                    if (saleComparison == 0) {
+                        return a1.getRegistration().compareTo(a2.getRegistration());
+                    } else {
+                        return saleComparison;
+                    }
+                })
                 .collect(Collectors.toList());
 
         final StringBuilder description = new StringBuilder();
@@ -73,6 +80,6 @@ public class CheapestAircraftForSale implements Task {
     }
 
     private String formatSalePrice(FSEAircraft aircraft) {
-        return (int) (aircraft.getSalePrice() / 1000) + "k";
+        return Tools.formatPrice(aircraft.getSalePrice());
     }
 }
