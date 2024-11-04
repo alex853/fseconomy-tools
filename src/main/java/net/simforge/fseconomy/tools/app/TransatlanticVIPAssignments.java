@@ -15,8 +15,8 @@ public class TransatlanticVIPAssignments implements Task {
 
     private static final Collection<String> icaos = Arrays.asList(
             "EGLL", "LPPT", 
-            "KEWR", "KJFK", "KLGA", "KLGB", "KMRY", "KOAK", 
-            "PHLI", "PHNL", "PHOG", "PHTO");
+            "KEWR", "KJFK", "KLAX", "KLGA", "KLGB", "KMRY", "KOAK", 
+            "PHKO", "PHLI", "PHNL", "PHOG", "PHTO");
 
     private long lastCheck;
     private final Set<String> notifiedAssignments = new TreeSet<>();
