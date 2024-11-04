@@ -10,18 +10,18 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TransatlanticVIPAssignments implements Task {
-    private static final Logger log = LoggerFactory.getLogger(TransatlanticVIPAssignments.class);
+public class LongHaulVIPAssignments implements Task {
+    private static final Logger log = LoggerFactory.getLogger(LongHaulVIPAssignments.class);
 
     private static final Collection<String> icaos = Arrays.asList(
             "EGLL", "LPPT", 
-            "KJFK", "KLGA", "KEWR", "KOAK", "KLGB", "KMRY", 
-            "PHNL", "PHTO");
+            "KEWR", "KJFK", "KLAX", "KLGA", "KLGB", "KMRY", "KOAK", 
+            "PHKO", "PHLI", "PHNL", "PHOG", "PHTO");
 
     private long lastCheck;
     private final Set<String> notifiedAssignments = new TreeSet<>();
 
-    public TransatlanticVIPAssignments() {
+    public LongHaulVIPAssignments() {
     }
 
     @Override
@@ -51,7 +51,7 @@ public class TransatlanticVIPAssignments implements Task {
         filtered.forEach(a -> {
             final String assignment = Tools.toString(a);
             log.info(assignment);
-            TrelloSender.addToQueue("[FSE/Transatlantic] " + assignment, null);
+            TrelloSender.addToQueue("[FSE] [Long-haul] " + assignment, null);
             notifiedAssignments.add(a.getId());
         });
     }
