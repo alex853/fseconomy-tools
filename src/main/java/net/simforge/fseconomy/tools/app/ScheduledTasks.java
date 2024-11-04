@@ -13,7 +13,7 @@ public class ScheduledTasks {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
     private final Collection<Task> tasks = Arrays.asList(
-            new TransatlanticVIPAssignments(),
+            new LongHaulVIPAssignments(),
             new CheapestAircraftForSale(
                     "Cessna 404 Titan",
                     "Cessna Citation CJ4 (MSFS)",

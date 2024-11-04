@@ -79,7 +79,7 @@ public class VIPAssignmentsByMakeModel implements Task {
             final FSEAircraft aircraft = availableAircrafts.stream()
                     .filter(ac -> ac.getLocation().equals(a.getLocation()))
                     .findFirst().get();
-            final String name = "[" + icaoCode + " / " + aircraft.getRegistration() + "] "
+            final String name = "[FSE] [" + icaoCode + "] [" + aircraft.getRegistration() + "] "
                     + a.getLocation() + "-" + a.getToIcao() + ", "
                     + (int)a.getDistance() + "nm, "
                     + "$" + Tools.formatPrice(a.getPay());
