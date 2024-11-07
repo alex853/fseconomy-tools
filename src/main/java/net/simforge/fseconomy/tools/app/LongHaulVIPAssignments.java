@@ -15,7 +15,7 @@ public class LongHaulVIPAssignments implements Task {
 
     private static final Collection<String> icaos = Arrays.asList(
             "EGLL", "LPPT", 
-            "KEWR", "KJFK", "KLAX", "KLGA", "KLGB", "KMRY", "KOAK", 
+            "KEWR", "KJFK", "KLAX", "KLGA", "KLGB", "KMRY", "KOAK", "KSAN",
             "PHKO", "PHLI", "PHNL", "PHOG", "PHTO");
 
     private long lastCheck;
