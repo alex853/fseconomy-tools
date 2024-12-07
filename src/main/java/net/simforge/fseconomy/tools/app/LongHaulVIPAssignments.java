@@ -49,9 +49,14 @@ public class LongHaulVIPAssignments implements Task {
                 .collect(Collectors.toList());
 
         filtered.forEach(a -> {
-            final String assignment = Tools.toString(a);
-            log.info(assignment);
-            TrelloSender.addToQueue("[FSE] [Long-haul] " + assignment, null);
+            final String name = "[FSE] [Long-haul]    "
+                    + a.getLocation() + " -> " + a.getToIcao() + ",     "
+                    + (int)a.getDistance() + "nm,     "
+                    + "$" + Tools.formatPrice(a.getPay());
+            final String description = Tools.toString(a);
+            final String msg = name + " / " + description;
+            log.info(msg);
+            TrelloSender.addToQueue(name, description);
             notifiedAssignments.add(a.getId());
         });
     }

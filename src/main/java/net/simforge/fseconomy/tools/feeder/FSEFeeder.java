@@ -16,7 +16,7 @@ public class FSEFeeder {
 
     private static final String accessKey = Settings.get("fse.feeder.key");
 
-    private static final long minimalTimeBetweenRequests = 15000;
+    private static final long minimalTimeBetweenRequests = 20000;
     private static long lastFeederRequestAt;
 
     public synchronized static Csv loadCsv(final String request) throws IOException {
