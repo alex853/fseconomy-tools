@@ -20,7 +20,7 @@ public class FSEFeeder {
     private static long lastFeederRequestAt;
 
     public synchronized static Csv loadCsv(final String request) throws IOException {
-        int attempt = 1;
+        int attemptsMade = 0;
         while (true) {
             if (lastFeederRequestAt > 0) {
                 long timeSince = System.currentTimeMillis() - lastFeederRequestAt;
@@ -38,12 +38,13 @@ public class FSEFeeder {
             final String content = IOHelper.download(url);
 
             if (content.contains("many requests in 60 second period")) {
-                attempt++;
-                if (attempt == 3) {
+                attemptsMade++;
+                if (attemptsMade == 3) {
                     throw new RuntimeException("Too many requests in 60 second period found and it was not solved in 3 attempts");
                 }
-                log.info("[FSE-Feeder] Too many requests in 60 second period found, sleeping for 70 seconds and repeating...");
-                Misc.sleep(70000);
+                int seconds = 70 * attemptsMade;
+                log.info("[FSE-Feeder] Too many requests in 60 second period found, sleeping for {} seconds and repeating...", seconds);
+                Misc.sleep(seconds * 1000);
             } else {
                 return Csv.fromContent(content);
             }

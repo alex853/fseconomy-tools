@@ -79,7 +79,7 @@ public class CheapestAircraftForSale implements Task {
         final String percentDiscount = cheapest != null && avgSalePrice != null
                 ? "-" + (int)((1 - cheapest.getSalePrice()/avgSalePrice)*100) + "%"
                 : "(no discount info)";
-        final String name = "[FSE] [" + makeModel + "] " + (cheapest != null
+        final String name = "[FSE] [Cheapest Aircraft] [" + makeModel + "] " + (cheapest != null
                 ? Tools.formatPrice(cheapest.getSalePrice()) + " " + percentDiscount
                 : "nothing");
 
@@ -92,5 +92,4 @@ public class CheapestAircraftForSale implements Task {
         TrelloSender.addToQueue(name, description.toString());
         notifiedMakeModels.put(makeModel, msg);
     }
-
 }

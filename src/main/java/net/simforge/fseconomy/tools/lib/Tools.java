@@ -5,7 +5,6 @@ import net.simforge.commons.io.IOHelper;
 import net.simforge.commons.misc.Geo;
 import net.simforge.commons.misc.Str;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
