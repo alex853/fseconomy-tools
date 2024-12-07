@@ -18,7 +18,9 @@ public class PlanAircraftItinerary implements Task {
     private final int maxHours;
 
     private long lastCheck;
-    private int[] lastSentBestPrice;
+    private final int[] lastSentBestPrice;
+
+    private static final int ferryWithinVicinityNm = 100;
 
     public PlanAircraftItinerary(final String aircraftRegistration,
                                  final int maxPax,
@@ -65,12 +67,12 @@ public class PlanAircraftItinerary implements Task {
                     .withMaxPax(maxPax)
                     .withMaxLegs(currMaxLegs)
                     .withMaxWorkingHours(maxHours)
-                    .withLookingInVicinityRadiusNm(0)
+                    .withLookingInVicinityRadiusNm(ferryWithinVicinityNm)
                     .withIgnoreIcaosWithDigits(true);
             final List<FindAssignments.Assignment> assignments = FindAssignments.find(params);
 
             if (assignments.isEmpty() && lastSentBestPrice[currMaxLegs] != 0) {
-                TrelloSender.addToQueue("[FSE] [" + aircraftRegistration + "] No assignment with " + currMaxLegs + " leg(s) found", "");
+                TrelloSender.addToQueue("[FSE] [Aircraft Itinerary] [" + aircraftRegistration + "] No assignment with " + currMaxLegs + " leg(s) found", "");
                 lastSentBestPrice[currMaxLegs] = 0;
                 return;
             }
@@ -80,7 +82,7 @@ public class PlanAircraftItinerary implements Task {
                 return;
             }
 
-            final String name = String.format("[FSE] [%s] L%d | Found %s",
+            final String name = String.format("[FSE] [Aircraft Itinerary] [%s] L%d | Found %s",
                     aircraftRegistration,
                     currMaxLegs,
                     bestPriceAssignment.toString());

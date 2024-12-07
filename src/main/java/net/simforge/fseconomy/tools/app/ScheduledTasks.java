@@ -21,6 +21,7 @@ public class ScheduledTasks {
                     "Cessna Citation X"),
             new VIPAssignmentsByMakeModel("Cessna Citation CJ4 (MSFS)", 10, "C25C"),
             new VIPAssignmentsByMakeModel("Cessna Citation Longitude", 8, "C700"),
+            new VIPAssignmentsInEurope(10),
             new PlanAircraftItinerary("G-SDRY", 10, 4, 14)
     );
 
