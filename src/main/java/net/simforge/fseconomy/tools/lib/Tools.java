@@ -95,4 +95,10 @@ public class Tools {
         return df.format(price / 1000) + "k";
     }
 
+    // todo ak replace it with Preconditions method once it will be upgraded
+    public static void checkNotNull(final Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException();
+        }
+    }
 }

@@ -11,9 +11,10 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
+import static net.simforge.fseconomy.tools.lib.Tools.checkNotNull;
 
 public class FSECachedAssignments {
-    private static final Logger log = LoggerFactory.getLogger(FSEFeeder.class);
+    private static final Logger log = LoggerFactory.getLogger(FSECachedAssignments.class);
 
     public static final File ASSIGNMENTS_PER_LOCATION_STORAGE = new File("./data/assignments-per-location");
 
@@ -96,6 +97,9 @@ public class FSECachedAssignments {
             }
 
             String id = csv.value(i, 0);
+
+            checkNotNull(id);
+
             String location = csv.value(i, 1);
             String toIcao = csv.value(i, 2);
             String fromIcao = csv.value(i, 3);

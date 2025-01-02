@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static net.simforge.fseconomy.tools.lib.Tools.ONE_HOUR;
-import static net.simforge.fseconomy.tools.lib.Tools.d1;
+import static net.simforge.fseconomy.tools.lib.Tools.*;
 
 // todo ak green jobs
 // todo ak cargo jobs
@@ -275,10 +274,13 @@ public class FindAssignments {
         }
 
         public static Leg build(final FSEAssignment fseAssignment) {
+            checkNotNull(fseAssignment);
             return new Leg(fseAssignment.getLocation(), fseAssignment.getToIcao(), false, fseAssignment);
         }
 
         public static Leg ferryLeg(final String fromIcao, final String toIcao) {
+            checkNotNull(fromIcao);
+            checkNotNull(toIcao);
             return new Leg(fromIcao, toIcao, true, null);
         }
 
