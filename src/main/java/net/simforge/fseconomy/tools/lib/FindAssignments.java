@@ -149,7 +149,8 @@ public class FindAssignments {
 
         assignments.forEach(assignment -> {
             final Set<String> alreadyUsedAssignmentIds = assignment.getLegs().stream()
-                    .map(l -> l.fseAssignment.getId())
+                    .map(l -> l.fseAssignment != null ? l.fseAssignment.getId() : null)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
 
             final List<Leg> legs = buildAvailableLegs(params, assignment.getFinishingIcao());
