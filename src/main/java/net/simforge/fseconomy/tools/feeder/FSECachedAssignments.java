@@ -2,6 +2,7 @@ package net.simforge.fseconomy.tools.feeder;
 
 import net.simforge.commons.io.Csv;
 import net.simforge.commons.io.IOHelper;
+import net.simforge.commons.legacy.misc.Settings;
 import net.simforge.fseconomy.tools.lib.FSEAssignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import static net.simforge.fseconomy.tools.lib.Tools.checkNotNull;
 public class FSECachedAssignments {
     private static final Logger log = LoggerFactory.getLogger(FSECachedAssignments.class);
 
-    public static final File ASSIGNMENTS_PER_LOCATION_STORAGE = new File("./data/assignments-per-location");
+    private static final File ASSIGNMENTS_PER_LOCATION_STORAGE = new File(Settings.get("storage.root"), "assignments-per-location");
 
     public static List<FSEAssignment> loadOutgoingAssignments(final Collection<String> icaos,
                                                               final long refreshPeriod) throws IOException {
