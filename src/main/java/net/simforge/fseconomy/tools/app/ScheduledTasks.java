@@ -14,16 +14,17 @@ public class ScheduledTasks {
 
     private final Collection<Task> tasks = Arrays.asList(
             new LongHaulVIPAssignments(),
-            new CheapestAircraftForSale(
-                    "Cessna 404 Titan",
-                    "Cessna Citation CJ4 (MSFS)",
-                    "Cessna Citation Longitude",
-                    "Cessna Citation X"),
-            new VIPAssignmentsByMakeModel("Cessna Citation CJ4 (MSFS)", 10, "C25C"),
-            new VIPAssignmentsByMakeModel("Cessna Citation Longitude", 8, "C700"),
-            new VIPAssignmentsByMakeModel("Cessna 404 Titan", 9, "C404"),
-            new VIPAssignmentsByMakeModel("Cessna 310", 5, "C310"),
-            new VIPAssignmentsInEurope(10),
+//            new CheapestAircraftForSale(
+//                    "Cessna 404 Titan",
+//                    "Cessna Citation CJ4 (MSFS)",
+//                    "Cessna Citation Longitude",
+//                    "Cessna Citation X"
+//            ),
+//            new VIPAssignmentsByMakeModel("Cessna Citation CJ4 (MSFS)", 10, "C25C"),
+//            new VIPAssignmentsByMakeModel("Cessna Citation Longitude", 8, "C700"),
+//            new VIPAssignmentsByMakeModel("Cessna 404 Titan", 9, "C404"),
+//            new VIPAssignmentsByMakeModel("Cessna 310", 5, "C310"),
+//            new VIPAssignmentsInEurope(10),
             new PlanAircraftItinerary("G-SDRY", 10, 4, 14)
     );
 
