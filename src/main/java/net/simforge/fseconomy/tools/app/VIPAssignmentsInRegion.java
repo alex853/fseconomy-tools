@@ -12,17 +12,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class VIPAssignmentsInEurope implements Task {
-    private static final Logger log = LoggerFactory.getLogger(VIPAssignmentsInEurope.class);
+public class VIPAssignmentsInRegion implements Task {
+    private static final Logger log = LoggerFactory.getLogger(VIPAssignmentsInRegion.class);
 
     private final int maxPax;
 
     private long lastCheck;
     private final Set<String> sentNotifications = new TreeSet<>();
 
-    public VIPAssignmentsInEurope(final int maxPax) {
+    public VIPAssignmentsInRegion(final int maxPax, final Predicate<String> condition) {
         this.maxPax = maxPax;
     }
 
@@ -46,7 +47,7 @@ public class VIPAssignmentsInEurope implements Task {
         }
 
         final List<FSEAssignment> suitableAssignments = assignments.stream()
-                .filter(a -> a.getPay() >= 15000)
+                .filter(a -> a.getPay() >= 24000)
                 .filter(a -> a.getAmount() <= maxPax)
                 .filter(a -> "passengers".equals(a.getUnitType()))
                 .filter(a -> Conditions.noDigitsInIcao(a.getToIcao()))
@@ -54,7 +55,7 @@ public class VIPAssignmentsInEurope implements Task {
                 .collect(Collectors.toList());
 
         suitableAssignments.forEach(a -> {
-            final String name = "[FSE] [Assignments in Europe]    "
+            final String name = "[FSE] [Assignments in Region]    "
                     + a.getLocation() + " -> " + a.getToIcao() + ",     "
                     + (int)a.getDistance() + "nm,     "
                     + "$" + Tools.formatPrice(a.getPay());

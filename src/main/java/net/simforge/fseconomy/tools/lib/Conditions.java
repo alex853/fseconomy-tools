@@ -9,6 +9,10 @@ public class Conditions {
         return icao.startsWith("E") || icao.startsWith("L") || icao.startsWith("B") || icao.startsWith("G");
     }
 
+    public static boolean isIcaoInExUSSR(final String icao) {
+        return icao.startsWith("U");
+    }
+
     public static boolean noDigitsInIcao(String icao) {
         return !icao.matches(".*\\d.*");
     }

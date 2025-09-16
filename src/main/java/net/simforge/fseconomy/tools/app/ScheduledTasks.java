@@ -1,5 +1,6 @@
 package net.simforge.fseconomy.tools.app;
 
+import net.simforge.fseconomy.tools.lib.Conditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,8 +25,11 @@ public class ScheduledTasks {
 //            new VIPAssignmentsByMakeModel("Cessna Citation Longitude", 8, "C700"),
 //            new VIPAssignmentsByMakeModel("Cessna 404 Titan", 9, "C404"),
 //            new VIPAssignmentsByMakeModel("Cessna 310", 5, "C310"),
-            new VIPAssignmentsInEurope(10),
-            new PlanAircraftItinerary("G-SDRY", 10, 4, 14)
+            new VIPAssignmentsInRegion(10,
+                    icao ->
+                            (Conditions.isIcaoInEUOrNear(icao) || Conditions.isIcaoInExUSSR(icao))
+                                    && Conditions.noDigitsInIcao(icao))
+//            new PlanAircraftItinerary("G-SDRY", 10, 4, 14)
     );
 
     @Scheduled(fixedRate = 60000)
