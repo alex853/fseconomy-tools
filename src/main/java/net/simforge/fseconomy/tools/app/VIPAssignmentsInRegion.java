@@ -19,12 +19,14 @@ public class VIPAssignmentsInRegion implements Task {
     private static final Logger log = LoggerFactory.getLogger(VIPAssignmentsInRegion.class);
 
     private final int maxPax;
+    private final Predicate<String> condition;
 
     private long lastCheck;
     private final Set<String> sentNotifications = new TreeSet<>();
 
     public VIPAssignmentsInRegion(final int maxPax, final Predicate<String> condition) {
         this.maxPax = maxPax;
+        this.condition = condition;
     }
 
     @Override
@@ -37,8 +39,7 @@ public class VIPAssignmentsInRegion implements Task {
         final List<FSEAssignment> assignments;
         try {
             final Set<String> majorAirportsInEU = Tools.getMajorAirports().stream()
-                    .filter(Conditions::isIcaoInEUOrNear)
-                    .filter(Conditions::noDigitsInIcao)
+                    .filter(condition)
                     .collect(Collectors.toSet());
             assignments = FSECachedAssignments.loadOutgoingAssignments(majorAirportsInEU, Tools.ONE_HOUR);
         } catch (IOException e) {
