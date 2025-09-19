@@ -48,7 +48,7 @@ public class VIPAssignmentsInRegion implements Task {
         }
 
         final List<FSEAssignment> suitableAssignments = assignments.stream()
-                .filter(a -> a.getPay() >= 24000)
+                .filter(a -> a.getPay() >= 19900)
                 .filter(a -> a.getAmount() <= maxPax)
                 .filter(a -> "passengers".equals(a.getUnitType()))
                 .filter(a -> Conditions.noDigitsInIcao(a.getToIcao()))
